@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    @apply text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800 
+}
+
+router-outlet{
+    display: none;
+}

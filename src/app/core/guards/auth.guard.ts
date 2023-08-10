@@ -4,21 +4,22 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { FirebaseService } from '../services/firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
-  canActivate(
+  constructor(private router: Router, private fbService:FirebaseService) {}
+  async canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
+  ): Promise<boolean> {
+    if(await this.fbService.isLoggedIn()){
+      return true;
+    }
     this.router.navigate(['/login']);
-
     return false;
   }
 }

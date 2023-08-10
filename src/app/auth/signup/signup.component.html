@@ -1,3 +1,28 @@
-<div class="wrapper">
-    
+<div class="wrapper grid place-items-center h-full w-full ">
+  <form
+    [formGroup]="signupForm"
+    (ngSubmit)="handleSignup()"
+    class="signup-container"
+  >
+    <h1 class="text-4xl font-semibold text-slate-100 bg-blue-600">Signup</h1>
+    <input
+      type="text"
+      formControlName="name"
+      class="border w-full border-blue-600 p-1 rounded-lg"
+      placeholder="Name"
+    />
+    <input
+      type="text"
+      formControlName="email"
+      class="border w-full border-blue-600 p-1 rounded-lg"
+      placeholder="Email"
+    />
+    <input
+      type="text"
+      formControlName="password"
+      class="border w-full border-blue-600 p-1 rounded-lg"
+      placeholder="Password"
+    />
+    <button   class="border w-full border-blue-600 text-slate-100 bg-blue-700 p-1 rounded-lg">SIGNUP</button>
+  </form>
 </div>

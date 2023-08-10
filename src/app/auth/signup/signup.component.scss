@@ -1,3 +1,11 @@
-.signup-container{
-    @apply container max-w-sm mx-auto border bg-blue-600 flex flex-col items-center gap-3 p-3 rounded-xl
+.bg-login{
+    background-image: url(../../../assets/pexels-sagar-shally-11305767.jpg);
+    background-position-x: center;
+    background-repeat: no-repeat;
+}
+.iconbtn{
+    svg{
+        height: 24px;
+        width: 24px;
+    }
 }

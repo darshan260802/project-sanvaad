@@ -30,4 +30,12 @@ export class LoginComponent implements OnInit{
   }
 
 
+  loginOrSignup(mode: "login" | "signup") {
+    if(mode === "login"){
+      // console.log(login)
+      console.log(mode)
+    }else{
+      console.log(mode)
+    }
+  }
 }

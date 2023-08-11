@@ -1,28 +1,26 @@
 import { Injectable } from '@angular/core';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { Notyf } from 'notyf';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommonService {
+  constructor() {}
 
-  constructor() { }
+  showAlert(message: string, type: 'error' | 'success', timeout = 3000): void {
+    const notify = new Notyf({
+      position: {
+        x: 'right',
+        y: 'top',
+      },
+      dismissible: true,
+      duration: timeout,
+    });
 
-  showAlert(
-    title: string,
-    message: string,
-    type: SweetAlertIcon,
-    timeout = 3000
-  ): void {
-    Swal.fire({
-      icon: type,
-      position: "top-end",
-      text: message,
-      titleText: title,
-      toast: true,
-      showConfirmButton: false,
-      timer: timeout,
-      showCloseButton: true,
-    }).finally(() => {});
+    if (type === 'error') {
+      notify.error(message);
+    } else {
+      notify.success(message);
+    }
   }
 }

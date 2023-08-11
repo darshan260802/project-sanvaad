@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit{
 
   handleSubmit(){
     console.log(this.authForm.value);
+    this.helper.common.showAlert('Login Successful', 'success');
   }
 
 

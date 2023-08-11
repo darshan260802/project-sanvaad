@@ -16,6 +16,16 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean> {
+
+    if(state.url.includes('login')){
+      if(await this.fbService.isLoggedIn()){
+        this.router.navigate(['']);
+        return false;
+      }
+      return true;
+    }
+
+
     if(await this.fbService.isLoggedIn()){
       return true;
     }

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,

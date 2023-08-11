@@ -11,7 +11,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  @apply text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-slate-800;
+  @apply text-slate-900 dark:text-slate-100;
+}
+
+body {
+  @apply bg-slate-100 dark:bg-slate-800;
 }
 
 router-outlet {

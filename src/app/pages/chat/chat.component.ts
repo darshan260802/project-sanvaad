@@ -15,7 +15,6 @@ export class ChatComponent implements OnInit {
 
   async ngOnInit() {
     this.user = await  this.helper.firebase.getUserInfo();
-    this.toggleMode();
   }
 
   handleLogout() {

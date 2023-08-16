@@ -8,6 +8,7 @@ import {HelperService} from 'src/app/core/services/helper.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
+  showSettingsDropdown: boolean = false;
 
   constructor(private helper: HelperService, private router: Router) {
   }

@@ -6,15 +6,20 @@
       <section
         class="flex flex-col flex-none overflow-auto w-24 hover:w-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
         <div class="header p-4 flex flex-row justify-between items-center flex-none">
-          <div class="w-16 h-16 relative flex flex-shrink-0" style="filter: invert(100%);">
-            <img class="rounded-full w-full h-full object-cover" alt="ravisankarchinnam"
-                 src="https://avatars3.githubusercontent.com/u/22351907?s=60"/>
+          <div class="relative flex flex-shrink-0 items-center gap-2.5">
+            <div class="w-16 h-16">
+              <img class="rounded-lg w-full h-full object-cover bg-amber-200" alt="ravisankarchinnam"
+                   src="https://avatars3.githubusercontent.com/u/22351907?s=60"/>
+            </div>
+            <div>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">Tilak Ved</p>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">Tilak VedTilak VedTilak Ved@Email.com</p>
+            </div>
           </div>
-          <p class="text-md font-bold hidden md:block group-hover:block">Messenger</p>
           <div class="flex justify-between items-center">
             <div>
               <button id="theme-toggle" type="button" (click)="toggleMode()"
-                      class="bg-gray-800 flex flex-shrink-0 h-8 hover:bg-gray-700 hover:text-gray-900 mx-2 p-2 rounded-full rounded-lg text-gray-500 w-8 items-center">
+                      class="bg-gray-800 flex flex-shrink-0 h-8 hover:bg-gray-700 hover:text-gray-900 mx-2 p-2 rounded-lg text-gray-500 w-8 items-center">
                 <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
                      xmlns="http://www.w3.org/2000/svg">
                   <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
@@ -27,15 +32,28 @@
                 </svg>
               </button>
             </div>
-            <div>
-              <button type="button" (click)="handleLogout()"
-                      class="group-hover:block flex flex-shrink-0 focus:outline-none mx-2 rounded-lg  rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
+            <div class="relative">
+              <button type="button" (click)="showSettingsDropdown = !showSettingsDropdown"
+                      class="group-hover:block flex flex-shrink-0 focus:outline-none rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
                 <svg viewBox="0 0 20 20" class="w-full h-full fill-current rotate-90">
                   <path d="M10.001,7.8C8.786,7.8,7.8,8.785,7.8,10s0.986,2.2,2.201,2.2S12.2,11.215,12.2,10S11.216,7.8,10.001,7.8z
  M3.001,7.8C1.786,7.8,0.8,8.785,0.8,10s0.986,2.2,2.201,2.2S5.2,11.214,5.2,10S4.216,7.8,3.001,7.8z M17.001,7.8
 C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.8,17.001,7.8z"></path>
                 </svg>
               </button>
+              <div *ngIf="showSettingsDropdown"
+                   class="absolute bg-gray-800 left-0 z-40 mt-2 overflow-hidden border rounded-lg border-gray-700 text-white xl:left-auto xl:right-0 py-1">
+                <div class="w-32">
+                  <p
+                    class="block px-4 py-2 text-sm capitalize transition-colors duration-300 transform text-gray-300 hover:text-primary">
+                    Profile</p>
+                </div>
+                <div (click)="handleLogout()" class="w-32">
+                  <p
+                    class="block px-4 py-2 text-sm capitalize transition-colors duration-300 transform text-gray-300 hover:text-primary">
+                    Logout</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -57,23 +75,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </form>
         </div>
         <div class="contacts p-2 flex-1 overflow-y-scroll">
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/women/61.jpg"
-                   alt=""
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Angelina Jolie</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">Ok, see you at the subway in a bit.</p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">1s</p>
-              </div>
-            </div>
-          </div>
+
           <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
             <div class="w-16 h-16 relative flex flex-shrink-0">
               <img class="shadow-md rounded-full w-full h-full object-cover"
@@ -111,242 +113,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
               </div>
             </div>
           </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/12.jpg"
-                   alt=""
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>John Snow</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">You missed a call John.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">4h</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/women/23.jpg"
-                   alt="User2"
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Emma Watson</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">You sent a video.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">11 Feb</p>
-              </div>
-            </div>
 
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/women/87.jpg"
-                   alt="User2"
-              />
-              <div class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
-                <div class="bg-green-500 rounded-full w-3 h-3"></div>
-              </div>
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Grande</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">Ah, it was an awesome one night stand.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">1 Feb</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/45.jpg"
-                   alt="User2"
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Bruce Lee</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">You are a great human being.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">23 Jan</p>
-              </div>
-            </div>
-
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-10 h-10 object-cover absolute ml-6"
-                   src="https://randomuser.me/api/portraits/men/22.jpg"
-                   alt="User2"
-              />
-              <img class="shadow-md rounded-full w-10 h-10 object-cover absolute mt-6"
-                   src="https://randomuser.me/api/portraits/men/55.jpg"
-                   alt="User2"
-              />
-              <div class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
-                <div class="bg-green-500 rounded-full w-3 h-3"></div>
-              </div>
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>TailwindCSS Group</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">Adam: Hurray, Version 2 is out now!!.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">23 Jan</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/34.jpg"
-                   alt="User2"
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Will Smith</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">WTF dude!! absofuckingloutely.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">13 Dec</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/22.jpg"
-                   alt="User2"
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Brad Pitt</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">you called Brad.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">31 Dec</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/99.jpg"
-                   alt="User2"
-              />
-              <div class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
-                <div class="bg-green-500 rounded-full w-3 h-3"></div>
-              </div>
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Tom Hanks</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">Tom called you.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">31 Dec</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/41.jpg"
-                   alt="User2"
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Dwayne Johnson</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">How can i forget about that man!.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">12 Nov</p>
-              </div>
-            </div>
-
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/70.jpg"
-                   alt="User2"
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Johnny Depp</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">Alright! let's catchup tomorrow!.
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">4 Nov</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/20.jpg"
-                   alt="User2"
-              />
-              <div class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
-                <div class="bg-green-500 rounded-full w-3 h-3"></div>
-              </div>
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Leonardo Dicaprio</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">How can you leave Rose dude. I hate you!
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">26 Oct</p>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-            <div class="w-16 h-16 relative flex flex-shrink-0">
-              <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/men/32.jpg"
-                   alt="User2"
-              />
-            </div>
-            <div class="flex-auto min-w-0 ml-4  hidden md:block group-hover:block">
-              <p>Tom Cruise</p>
-              <div class="flex items-center justify-between text-gray-600 text-sm">
-                <div class="min-w-0">
-                  <p class="truncate">Happy birthday to you my friend!
-                  </p>
-                </div>
-                <p class="ml-2 whitespace-no-wrap min-50 text-right">2 Oct</p>
-              </div>
-            </div>
-
-          </div>
         </div>
       </section>
       <section class="flex flex-col flex-auto border-l border-gray-800">
@@ -399,6 +166,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           <p class="p-4 text-center text-sm text-gray-500">FRI 3:04 PM</p>
           <div class="flex flex-row justify-end">
             <div class="messages text-sm text-white grid grid-flow-row gap-2">
+              <span class="text-gray-700 text-right">You</span>
               <div class="flex items-center flex-row-reverse group">
                 <p class="px-6 py-3 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">Hey! How are
                   you?</p>
@@ -445,6 +213,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           <p class="p-4 text-center text-sm text-gray-500">12:40 PM</p>
           <div class="flex flex-row justify-end">
             <div class="messages text-sm text-white grid grid-flow-row gap-2">
+              <span class="text-gray-700 text-right">You</span>
               <div class="flex items-center flex-row-reverse group">
                 <p class="px-6 py-3 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">Hey! How are
                   you?</p>

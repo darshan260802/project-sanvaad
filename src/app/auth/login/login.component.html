@@ -73,9 +73,13 @@
 
         <button
           type="submit"
-          class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+          class="submit-btn w-full flex items-center justify-center gap-2 bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 font-semibold rounded-lg px-4 py-3 mt-6"
         >
-          {{ mode | uppercase }}
+          <span
+            *ngIf="isLoading"
+            class="border inline-block h-4 w-4 border-4 border-b-transparent animate-spin rounded-full"
+          ></span>
+          {{ mode | titlecase }}
         </button>
       </form>
 
@@ -83,7 +87,8 @@
 
       <button
         type="button"
-        class="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
+        (click)="loginWithGoogle()"
+        class="w-full block  bg-white hover:bg-gray-100  focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
       >
         <div class="flex items-center justify-center">
           <svg
@@ -118,7 +123,9 @@
               d="M48 48L17 24l-4-3 35-10z"
             />
           </svg>
-          <span class="ml-4" (click)="loginWithGoogle()" > Continue with Google</span>
+          <span class="ml-4" >
+            Continue with Google</span
+          >
         </div>
       </button>
 

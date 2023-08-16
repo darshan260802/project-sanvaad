@@ -1,20 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {HelperService} from 'src/app/core/services/helper.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { from } from 'rxjs';
+import { HelperService } from 'src/app/core/services/helper.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
+  user:any = null;
+  constructor(private helper: HelperService, private router: Router) {}
 
-  constructor(private helper: HelperService, private router: Router) {
+  async ngOnInit() {
+    this.user = await  this.helper.firebase.getUserInfo();
+    this.toggleMode();
   }
 
-  ngOnInit() {
-    this.toggleMode()
-  }
+  
 
   handleLogout() {
     this.helper.firebase.logout().then(() => {
@@ -23,15 +26,15 @@ export class ChatComponent implements OnInit {
   }
 
   toggleMode() {
-    let themeToggleDarkIcon: any = document.getElementById('theme-toggle-dark-icon');
-    let themeToggleLightIcon: any = document.getElementById('theme-toggle-light-icon');
+    let themeToggleDarkIcon: any = document.getElementById(
+      'theme-toggle-dark-icon'
+    );
+    let themeToggleLightIcon: any = document.getElementById(
+      'theme-toggle-light-icon'
+    );
 
-    // Change the icons inside the button based on previous settings
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      themeToggleLightIcon?.classList.remove('hidden');
-    } else {
-      themeToggleDarkIcon?.classList.remove('hidden');
-    }
+    document.documentElement.classList.toggle('dark');
+   
     //
     // let themeToggleBtn: any = document.getElementById('theme-toggle');
     //

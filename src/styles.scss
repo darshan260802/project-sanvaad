@@ -11,7 +11,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  @apply text-slate-900 dark:text-slate-100;
+  color: white;
 }
 
 body {
@@ -21,6 +21,7 @@ body {
 router-outlet {
   display: none;
 }
+
 h1 {
   font-size: calc(var(--base-font-size) * 2.5); /* Example scaling factor */
   line-height: 1.2; /* Example line-height */

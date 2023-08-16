@@ -8,12 +8,14 @@
         <div class="header p-4 flex flex-row justify-between items-center flex-none">
           <div class="relative flex flex-shrink-0 items-center gap-2.5">
             <div class="w-16 h-16">
-              <img class="rounded-lg w-full h-full object-cover bg-amber-200" alt="ravisankarchinnam"
-                   src="https://avatars3.githubusercontent.com/u/22351907?s=60"/>
+              <img class="rounded-lg w-full h-full object-cover bg-amber-200" [alt]="user.displayName"
+                   [src]="user.photoURL"
+
+              />
             </div>
             <div>
-              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">Tilak Ved</p>
-              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">Tilak VedTilak VedTilak Ved@Email.com</p>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">{{user.displayName}}</p>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">{{user.email}}</p>
             </div>
           </div>
           <div class="flex justify-between items-center">

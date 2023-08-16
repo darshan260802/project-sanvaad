@@ -5,7 +5,8 @@ import {
   signInWithPopup,
   updateProfile,
 } from 'firebase/auth';
-import { GOOGLE_AUTH_PROVIDER, auth } from 'src/firebase.config';
+import { doc, setDoc } from 'firebase/firestore';
+import { GOOGLE_AUTH_PROVIDER, auth, database } from 'src/firebase.config';
 
 export interface CreateUserParams {
   name: string;
@@ -55,24 +56,40 @@ export class FirebaseService {
         password
       );
       await updateProfile(userCredential.user, { displayName: name });
+      const userRef = doc(database, 'users', userCredential.user.uid);
+      const userData = {
+        name,
+        email,
+        status: 'active',
+      };
+      await setDoc(userRef, userData);
       return userCredential;
     } catch (error) {
       console.log('CreateUserError', error);
-      return error;
+      throw error;
     }
   }
 
   // Login With Email & Password
-  async userLogin({ email, password }: Partial<CreateUserParams>): Promise<any> {
+  async userLogin({
+    email,
+    password,
+  }: Partial<CreateUserParams>): Promise<any> {
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email as string,
         password as string
       );
+      const userRef = doc(database, 'users', userCredential.user.uid);
+      const userData = {
+        name: userCredential.user.displayName,
+        email,
+        status: 'active',
+      };
+      await setDoc(userRef, userData);
       return userCredential;
     } catch (error) {
-      console.log('LoginUserError', {error});
       throw error;
     }
   }
@@ -81,13 +98,19 @@ export class FirebaseService {
   async continueWithGoogle() {
     try {
       return await signInWithPopup(auth, GOOGLE_AUTH_PROVIDER).then(
-        (result) => {
+        async(result) => {
+          const userRef = doc(database, 'users', result.user.uid);
+          const userData = {
+            name: result.user.displayName,
+            email: result.user.email,
+            status: 'active',
+          };
+          await setDoc(userRef, userData);
           return result.user;
         }
       );
     } catch (error) {
-      console.log('GOOGLEERROR', error);
-      return error;
+      throw error;
     }
   }
 
@@ -95,7 +118,7 @@ export class FirebaseService {
   async logout() {
     try {
       await auth.signOut();
-      return true
+      return true;
     } catch (error) {
       throw error;
     }

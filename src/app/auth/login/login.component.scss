@@ -1,18 +1,24 @@
-*{
+* {
   @apply text-slate-900 dark:text-slate-100;
+
 }
-.bg-login{
-    background-position-x: center;
-    background-repeat: no-repeat;
+
+.submit-btn{
+    @apply text-slate-100
 }
-.iconbtn{
-    svg{
-        height: 24px;
-        width: 24px;
+
+.bg-login {
+  background-position-x: center;
+  background-repeat: no-repeat;
+}
+.iconbtn {
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+  &:hover {
+    svg {
+      @apply bg-blue-700;
     }
-    &:hover{
-        svg{
-            @apply bg-blue-700
-        }
-    }
+  }
 }

@@ -1,4 +1,3 @@
-/* can be configured in tailwind.config.js */
 .group:hover .group-hover\:block {
   display: block;
 }
@@ -6,8 +5,6 @@
   width: 45%;
 }
 
-
-/* NO NEED THIS CSS - just for custom scrollbar which can also be configured in tailwind.config.js*/
 ::-webkit-scrollbar {
   width: 2px;
   height: 2px;
@@ -43,4 +40,11 @@
 }
 .min-50{
   min-width: 50px;
+}
+.border-top{
+  border-top: 1px solid;
+  @apply border-gray-800
+}.border-bottom{
+  border-bottom: 1px solid;
+  @apply border-gray-800
 }

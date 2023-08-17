@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {from} from 'rxjs';
 import {HelperService} from 'src/app/core/services/helper.service';
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-chat',
@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
   conversationsList: any[] = [];
   conversationId: string = '';
   messageInput: string = '';
-  messages:any[] = [];
+  messages: any[] = [];
 
   constructor(private helper: HelperService, private router: Router) {
   }
@@ -38,7 +38,7 @@ export class ChatComponent implements OnInit {
     this.helper.firebase.getUserConversations().subscribe({
       next: (res) => {
         this.conversationsList = res;
-        if(!this.conversationsList.length) return;
+        if (!this.conversationsList.length) return;
         this.selectConversation(this.conversationsList[0].uid);
       },
       error: (err) => {
@@ -98,5 +98,14 @@ export class ChatComponent implements OnInit {
     }).catch(err => {
       console.log('MessageCreationFailed', err);
     })
+  }
+
+  getActiveTimeStatus(lastTime: any) {
+   if (this.selectedUser.status == 'active'){
+     return "Active Now"
+   }else{
+     return ("Last Active at " +  formatDate(new Date(lastTime), 'MMM d, y, hh:mm a', 'en_US'))
+   }
+
   }
 }

@@ -231,7 +231,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
               </div>
               <div class="text-sm">
                 <p class="font-bold">{{ selectedUser.name }}</p>
-                <p>{{ selectedUser.lastActive | date }}</p>
+                <p> {{getActiveTimeStatus(selectedUser.lastActive)}}</p>
               </div>
             </div>
             <div class="cursor-pointer">
@@ -271,7 +271,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
                         <span [innerText]="message.messageContent"></span>
                         <span class="self-end text-xs text-gray-500">{{
                           message.createdAt | date : "shortTime"
-                        }}</span>
+                          }}</span>
                       </p>
                     </div>
                   </div>
@@ -292,10 +292,10 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
                       <p
                         class="px-6 py-3 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md flex flex-col"
                       >
-                      <span [innerText]="message.messageContent"></span>
-                      <span class="self-end text-xs text-gray-500">{{
-                        message.createdAt | date : "shortTime"
-                      }}</span>
+                        <span [innerText]="message.messageContent"></span>
+                        <span class="self-end text-xs text-gray-500">{{
+                          message.createdAt | date : "shortTime"
+                          }}</span>
                       </p>
                     </div>
                   </div>
@@ -609,7 +609,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
             <h2 class="pt-5 text-center text-gray-700">No User Selected</h2>
           </div>
         </ng-container>
-        <ng-container *ngIf="selectedUser == user"> profile </ng-container>
+        <ng-container *ngIf="selectedUser == user"> profile</ng-container>
       </section>
     </main>
   </div>

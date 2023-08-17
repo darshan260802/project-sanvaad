@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription, from } from 'rxjs';
-import { HelperService } from 'src/app/core/services/helper.service';
+import {Component,ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {HelperService} from 'src/app/core/services/helper.service';
+import {formatDate} from "@angular/common";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -40,6 +41,7 @@ export class ChatComponent implements OnInit {
     this.helper.firebase.getUserConversations().subscribe({
       next: (res) => {
         this.conversationsList = res;
+        if (!this.conversationsList.length) return;
         if (!this.conversationsList.length) return;
         this.selectConversation(this.conversationsList[0].uid);
       },
@@ -126,4 +128,15 @@ trackMessages(index: any, message: any) {
         console.log('MessageCreationFailed', err);
       });
   }
+
+  getActiveTimeStatus(lastTime: any) {
+   if (this.selectedUser.status == 'active'){
+     return "Active Now"
+   }else{
+     return ("Last Active at " +  formatDate(new Date(lastTime), 'MMM d, y, hh:mm a', 'en_US'))
+   }
+
+  }
+
+
 }

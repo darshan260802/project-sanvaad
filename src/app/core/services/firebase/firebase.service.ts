@@ -6,14 +6,17 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import {
+  documentId,
   addDoc,
   and,
   collection,
   doc,
+  getDoc,
   getDocs,
   onSnapshot,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -73,6 +76,7 @@ export class FirebaseService {
         email,
         status: 'active',
         photoURL: userCredential.user.photoURL,
+        lastActive: 'active',
       };
       await setDoc(userRef, userData);
       return userCredential;
@@ -160,8 +164,10 @@ export class FirebaseService {
       // ~ = \uf8ff
       const data = (await getDocs(collection(database, 'users'))).docs
         .map((doc) => ({ ...doc.data(), uid: doc.id }))
-        .filter((item: any) =>
-          (item['name'] as string).toLowerCase().includes(q.toLowerCase())
+        .filter(
+          (item: any) =>
+            (item['name'] as string).toLowerCase().includes(q.toLowerCase()) &&
+            item.uid !== auth.currentUser?.uid
         );
 
       return data;
@@ -191,6 +197,7 @@ export class FirebaseService {
       const conversation = await addDoc(collection(database, 'conversations'), {
         users: conversation_data,
         type: 'duo',
+        lastMessage: '',
       });
       return conversation;
     } catch (error) {
@@ -198,11 +205,46 @@ export class FirebaseService {
     }
   }
 
-// // get UserConversations
-//   getUserConversations():Observable<any>{
-//     return onSnapshot(query(collection(database, 'conversations'), where('users', 'array-contains', auth.currentUser?.uid)), (snapshot) => {
-//       return snapshot.docs.
-//     })
-//   }
+  // get UserConversations
+  getUserConversations(): Observable<any> {
+    const conversations = new BehaviorSubject<any[]>([]);
+    onSnapshot(
+      query(
+        collection(database, 'conversations'),
+        where('users', 'array-contains', auth.currentUser?.uid)
+      ),
+      async (snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          uid: doc.id,
+        }));
+        data.forEach(async (item: any) => {
+          const user =
+            (item['users'] as string[]).find(
+              (user: string) => user !== auth.currentUser?.uid.toString()
+            ) ??
+            auth.currentUser?.uid ??
+            '';
 
+          delete item['users'];
+          
+          onSnapshot(doc(database, 'users', user), (doc) => {
+            item['user'] = doc.data();
+          })
+        });
+        conversations.next(data);
+      }
+    );
+    
+
+    return conversations;
+  }
+
+  // go offline
+  updateUserStatus(newStatus: 'active' | 'inactive' | 'away') {
+    updateDoc(doc(database, 'users', auth.currentUser?.uid ?? ''), {
+      status: newStatus,
+      lastActive: Date.now(),
+    });
+  }
 }

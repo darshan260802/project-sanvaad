@@ -20,7 +20,17 @@ export class ChatComponent implements OnInit {
   constructor(private helper: HelperService, private router: Router) {}
 
   async ngOnInit() {
-    this.user = await  this.helper.firebase.getUserInfo();
+    this.helper.firebase.updateUserStatus('active')
+    this.user = await this.helper.firebase.getUserInfo();
+    this.toggleMode();
+    this.helper.firebase.getUserConversations().subscribe({
+      next:(res) => {
+        this.conversationsList = res;
+      },
+      error:(err) => {
+        console.log('err', err);
+      }
+    })
   }
 
   handleLogout() {
@@ -86,8 +96,8 @@ export class ChatComponent implements OnInit {
 
   createConversation(receiverId:string){
     this.helper.firebase.createConversation(receiverId).then(res=>{
-      console.log('CONVERSATION', res);
-
+      console.log('CONVERSATION', res, receiverId);
+      this.searchQuery = '';
     })
   }
 }

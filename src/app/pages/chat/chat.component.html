@@ -8,13 +8,11 @@
         <div class="header p-2 flex flex-row justify-between items-center flex-none border-bottom">
           <div class="relative flex flex-shrink-0 items-center gap-2.5">
             <div class="w-16 h-16">
-              <img class="rounded-full w-full h-full object-cover bg-amber-200" [title]="user?.displayName"
-                   [src]="user?.photoURL"/>
+              <img class="rounded-lg w-full h-full object-cover bg-amber-200" [title]="user?.displayName" [src]="user?.photoURL"/>
             </div>
             <div>
               <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default">{{user?.displayName}}</p>
-              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default"
-                 [title]="user?.email">{{user?.email}}</p>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default" [title]="user?.email">{{user?.email}}</p>
             </div>
           </div>
           <div class="flex justify-between items-center">
@@ -85,13 +83,21 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           <ng-container *ngIf="!searchQuery.length">
             <!-- Single Chat Item -->
             <ng-container *ngFor="let conversation of conversationsList">
-              <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative cursor-pointer">
+              <div
+                class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative cursor-pointer"
+              >
                 <!-- Avatar -->
                 <div class="w-16 h-16 relative flex flex-shrink-0">
-                  <img class="shadow-md rounded-full w-full h-full object-cover"
-                       src="https://randomuser.me/api/portraits/men/97.jpg" alt=""/>
+                  <img
+                    class="shadow-md rounded-full w-full h-full object-cover"
+                    [src]="conversation.user.photoURL"
+                    alt="USER"
+                  />
                   <!-- Online Dot -->
-                  <div class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
+                  <div
+                  *ngIf="conversation.user.status === 'active'"
+                    class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0"
+                  >
                     <div class="bg-green-500 rounded-full w-3 h-3"></div>
                   </div>
                   <!-- END: Online Dot -->
@@ -101,12 +107,12 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
                 <div
                   class="flex-auto min-w-0 ml-4 hidden md:block group-hover:block"
                 >
-                  <p class="font-bold">Tony Stark</p>
+                  <p class="font-bold" [innerText]="conversation.user.name"></p>
                   <div
                     class="flex items-center justify-between text-sm font-bold"
                   >
                     <div class="min-w-0">
-                      <p class="truncate">Hey, Are you there?</p>
+                      <p class="truncate" [innerText]="conversation.lastMessage" ></p>
                     </div>
                     <p class="ml-2 whitespace-no-wrap min-50 text-right">10min</p>
                   </div>

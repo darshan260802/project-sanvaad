@@ -10,5 +10,9 @@ import { FirebaseService } from './core/services/firebase/firebase.service';
 export class AppComponent implements OnInit {
   constructor(private fbService: FirebaseService) {}
 
-  async ngOnInit(): Promise<void> {}
+  async ngOnInit(): Promise<void> {
+    window.onbeforeunload = (e) => {
+      this.fbService.updateUserStatus('inactive');
+    }
+  }
 }

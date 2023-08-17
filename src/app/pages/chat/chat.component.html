@@ -8,11 +8,13 @@
         <div class="header p-2 flex flex-row justify-between items-center flex-none border-bottom">
           <div class="relative flex flex-shrink-0 items-center gap-2.5">
             <div class="w-16 h-16">
-              <img class="rounded-full w-full h-full object-cover bg-amber-200" [title]="user?.displayName" [src]="user?.photoURL"/>
+              <img class="rounded-full w-full h-full object-cover bg-amber-200" [title]="user?.displayName"
+                   [src]="user?.photoURL"/>
             </div>
             <div>
               <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default">{{user?.displayName}}</p>
-              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default" [title]="user?.email">{{user?.email}}</p>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default"
+                 [title]="user?.email">{{user?.email}}</p>
             </div>
           </div>
           <div class="flex justify-between items-center">
@@ -83,42 +85,44 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           <ng-container *ngIf="!searchQuery.length">
             <!-- Single Chat Item -->
             <ng-container *ngFor="let conversation of conversationsList">
-              <div
-                class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative cursor-pointer"
-              >
-                <!-- Avatar -->
-                <div class="w-16 h-16 relative flex flex-shrink-0">
-                  <img
-                    class="shadow-md rounded-full w-full h-full object-cover"
-                    [src]="conversation.user.photoURL"
-                    alt="USER"
-                  />
-                  <!-- Online Dot -->
-                  <div
-                  *ngIf="conversation.user.status === 'active'"
-                    class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0"
-                  >
-                    <div class="bg-green-500 rounded-full w-3 h-3"></div>
-                  </div>
-                  <!-- END: Online Dot -->
-                </div>
-                <!-- END: Avatar -->
-                <!-- User Info -->
-                <div
-                  class="flex-auto min-w-0 ml-4 hidden md:block group-hover:block"
+              <ng-container *ngIf="conversation.user">
+                <div (click)="selectConversation(conversation.uid)"
+                     class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative cursor-pointer"
                 >
-                  <p class="font-bold" [innerText]="conversation.user.name"></p>
-                  <div
-                    class="flex items-center justify-between text-sm font-bold"
-                  >
-                    <div class="min-w-0">
-                      <p class="truncate" [innerText]="conversation.lastMessage" ></p>
+                  <!-- Avatar -->
+                  <div class="w-16 h-16 relative flex flex-shrink-0">
+                    <img
+                      class="shadow-md rounded-full w-full h-full object-cover"
+                      [src]="conversation.user.photoURL"
+                      alt="USER"
+                    />
+                    <!-- Online Dot -->
+                    <div
+                      *ngIf="conversation.user.status === 'active'"
+                      class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0"
+                    >
+                      <div class="bg-green-500 rounded-full w-3 h-3"></div>
                     </div>
-                    <p class="ml-2 whitespace-no-wrap min-50 text-right">10min</p>
+                    <!-- END: Online Dot -->
                   </div>
+                  <!-- END: Avatar -->
+                  <!-- User Info -->
+                  <div
+                    class="flex-auto min-w-0 ml-4 hidden md:block group-hover:block"
+                  >
+                    <p class="font-bold" [innerText]="conversation.user.name"></p>
+                    <div
+                      class="flex items-center justify-between text-sm font-bold"
+                    >
+                      <div class="min-w-0">
+                        <p class="truncate" [innerText]="conversation.lastMessage"></p>
+                      </div>
+                      <p class="ml-2 whitespace-no-wrap min-50 text-right">10min</p>
+                    </div>
+                  </div>
+                  <!-- END: User Info -->
                 </div>
-                <!-- END: User Info -->
-              </div>
+              </ng-container>
             </ng-container>
             <!-- END: Single Chat Item -->
           </ng-container>
@@ -166,6 +170,8 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </ng-container>
           <!-- END: DISPLAY Search Results -->
         </div>
+        <!-- END: Conversations List -->
+        <!--Conversation Actions -->
         <div class="flex items-center justify-around py-3 border-top border-gray-800">
           <div class="bg-gray-800 flex hover:bg-gray-700 items-center py-3 px-4 h-full rounded-lg cursor-pointer">
             + New Chat
@@ -173,26 +179,26 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           <div class="bg-gray-800 flex hover:bg-gray-700 items-center py-3 px-4 h-full rounded-lg cursor-pointer">
             + New Group
           </div>
-
+          <!-- END: Conversation Actions -->
         </div>
-        <!-- END: Conversations List -->
       </section>
 
       <!-- ============================================ Right Panel============================================ -->
 
       <!-- Right Chat Panel  -->
-      <section class="flex flex-col flex-auto border-l border-gray-800">
+      <section class="flex flex-col flex-auto border-l border-gray-800" *ngIf="selectedUser">
+        <!--          selected user profile-->
         <div class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow border-bottom">
           <div class="flex">
             <div class="w-12 h-12 mr-4 relative flex flex-shrink-0">
               <img class="shadow-md rounded-full w-full h-full object-cover"
-                   src="https://randomuser.me/api/portraits/women/33.jpg"
+                   [src]="selectedUser.photoURL"
                    alt=""
               />
             </div>
             <div class="text-sm">
-              <p class="font-bold">Scarlett Johansson</p>
-              <p>Active 1h ago</p>
+              <p class="font-bold">{{selectedUser.name}}</p>
+              <p>{{selectedUser.lastActive | date}}</p>
             </div>
           </div>
           <div class="cursor-pointer">
@@ -204,6 +210,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
             </a>
           </div>
         </div>
+<!--        END: selected user profile-->
         <div class="chat-body p-4 flex-1 overflow-y-scroll">
           <div class="flex flex-row justify-start">
             <div class="messages text-sm text-gray-700 grid grid-flow-row gap-2">

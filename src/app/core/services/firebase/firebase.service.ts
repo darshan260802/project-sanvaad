@@ -227,7 +227,7 @@ export class FirebaseService {
             '';
 
           delete item['users'];
-          
+
           onSnapshot(doc(database, 'users', user), (doc) => {
             item['user'] = doc.data();
           })
@@ -235,7 +235,7 @@ export class FirebaseService {
         conversations.next(data);
       }
     );
-    
+
 
     return conversations;
   }
@@ -246,5 +246,22 @@ export class FirebaseService {
       status: newStatus,
       lastActive: Date.now(),
     });
+  }
+  // get messages
+  getConversationMessages(conversationId: string) :Observable<any>{
+  const messages = new BehaviorSubject<any[]>([])
+    onSnapshot(query(collection(database, 'messages'), where('conversationId','==',conversationId)),(data)=>{
+      const msgArr = data.docs.map(item => item.data())
+      messages.next(msgArr)
+    })
+    return messages
+  }
+  async getConversationDetails(conversationId: string) {
+    const conversation = (await getDoc(doc(database, 'conversations',conversationId))).data();
+    if(!conversation) throw new Error("Conversation Not Found")
+    const receiverId = (conversation['users'] as string[]).find(usr => usr !== auth.currentUser?.uid ?? '');
+    if(!receiverId) throw new Error("Receiver Not Found")
+    const user = (await getDoc(doc(database, 'users',receiverId))).data();
+    return {...user, uid: receiverId}
   }
 }

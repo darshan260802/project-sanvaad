@@ -109,4 +109,15 @@ export class ChatComponent implements OnInit {
       this.searchQuery = '';
     });
   }
+  async selectConversation(conversationId: string) {
+    // get conversation data
+    await this.helper.firebase.getConversationDetails(conversationId).then((res) => {
+      console.log("Receiver",res)
+      this.selectedUser = res;
+    })
+
+    this.helper.firebase.getConversationMessages(conversationId).subscribe((res) => {
+      console.log('mes =>', res);
+    });
+  }
 }

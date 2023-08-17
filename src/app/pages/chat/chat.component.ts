@@ -13,7 +13,10 @@ export class ChatComponent implements OnInit {
   user:any = null;
   openDropzone: boolean = false;
   selectedUser: any = null;
-
+  searchQuery = '';
+  searchResult: any[] = [];
+  searchTimer: any = null;
+  conversationsList: any[] = [];
   constructor(private helper: HelperService, private router: Router) {}
 
   async ngOnInit() {
@@ -66,5 +69,25 @@ export class ChatComponent implements OnInit {
     //     }
     //   }
     // })
+  }
+  handleSearch() {
+    clearTimeout(this.searchTimer);
+
+    this.searchTimer = setTimeout(() => {
+      this.helper.firebase.getSearchedUsers(this.searchQuery).then(res => {
+        console.log('SEARCH DATA', res);
+        this.searchResult = res;
+      }).catch(err => {
+        console.log('SEARCH ERROR', err);
+
+      });
+    }, 1000);
+  }
+
+  createConversation(receiverId:string){
+    this.helper.firebase.createConversation(receiverId).then(res=>{
+      console.log('CONVERSATION', res);
+
+    })
   }
 }

@@ -42,7 +42,6 @@ export class ChatComponent implements OnInit {
       next: (res) => {
         this.conversationsList = res;
         if (!this.conversationsList.length) return;
-        this.selectConversation(this.conversationsList[0].uid);
       },
       error: (err) => {
         console.log('err', err);

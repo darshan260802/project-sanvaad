@@ -137,11 +137,11 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
                       <div class="min-w-0">
                         <p
                           class="truncate"
-                          [innerText]="conversation.lastMessage"
+                          [innerText]="conversation.lastMessage?.content"
                         ></p>
                       </div>
                       <p class="ml-2 whitespace-no-wrap min-50 text-right">
-                        10min
+                        {{conversation.lastMessage?.createdAt | date:'shortTime'}}
                       </p>
                     </div>
                   </div>

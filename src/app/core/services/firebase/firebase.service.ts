@@ -263,11 +263,14 @@ export class FirebaseService {
   }
 
   async createMessage(conversationId:string,content:string ){
-    return await addDoc(collection(database, 'messages'),{
+    const date = Date.now();
+     await addDoc(collection(database, 'messages'),{
       messageContent:content,
       conversationId,
-      createdAt: Date.now(),
+      createdAt: date,
       senderId: auth.currentUser?.uid ?? '',
     })
+    await updateDoc(doc(database, 'conversations',conversationId),{lastMessage:{content, createdAt:date}})
+    return
   }
 }

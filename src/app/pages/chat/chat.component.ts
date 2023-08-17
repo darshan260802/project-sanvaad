@@ -6,11 +6,11 @@ import { HelperService } from 'src/app/core/services/helper.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
   showSettingsDropdown: boolean = false;
-  user:any = null;
+  user: any = null;
   openDropzone: boolean = false;
   selectedUser: any = null;
   searchQuery = '';
@@ -20,17 +20,25 @@ export class ChatComponent implements OnInit {
   constructor(private helper: HelperService, private router: Router) {}
 
   async ngOnInit() {
-    this.helper.firebase.updateUserStatus('active')
+    if (document.readyState === 'complete') {
+      if (!!!document.querySelector('app-root')) return;
+      this.helper.firebase.updateUserStatus('active');
+    } else {
+      document.onload = () => {
+        if (!!!document.querySelector('app-root')) return;
+        this.helper.firebase.updateUserStatus('active');
+      };
+    }
     this.user = await this.helper.firebase.getUserInfo();
     this.toggleMode();
     this.helper.firebase.getUserConversations().subscribe({
-      next:(res) => {
+      next: (res) => {
         this.conversationsList = res;
       },
-      error:(err) => {
+      error: (err) => {
         console.log('err', err);
-      }
-    })
+      },
+    });
   }
 
   handleLogout() {
@@ -48,7 +56,6 @@ export class ChatComponent implements OnInit {
     // );
     //
     // document.documentElement.classList.toggle('dark');
-
     //
     // let themeToggleBtn: any = document.getElementById('theme-toggle');
     //
@@ -84,20 +91,22 @@ export class ChatComponent implements OnInit {
     clearTimeout(this.searchTimer);
 
     this.searchTimer = setTimeout(() => {
-      this.helper.firebase.getSearchedUsers(this.searchQuery).then(res => {
-        console.log('SEARCH DATA', res);
-        this.searchResult = res;
-      }).catch(err => {
-        console.log('SEARCH ERROR', err);
-
-      });
+      this.helper.firebase
+        .getSearchedUsers(this.searchQuery)
+        .then((res) => {
+          console.log('SEARCH DATA', res);
+          this.searchResult = res;
+        })
+        .catch((err) => {
+          console.log('SEARCH ERROR', err);
+        });
     }, 1000);
   }
 
-  createConversation(receiverId:string){
-    this.helper.firebase.createConversation(receiverId).then(res=>{
+  createConversation(receiverId: string) {
+    this.helper.firebase.createConversation(receiverId).then((res) => {
       console.log('CONVERSATION', res, receiverId);
       this.searchQuery = '';
-    })
+    });
   }
 }

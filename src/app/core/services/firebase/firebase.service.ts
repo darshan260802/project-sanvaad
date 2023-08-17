@@ -18,6 +18,7 @@ import {
   setDoc,
   updateDoc,
   where,
+  orderBy,
 } from 'firebase/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GOOGLE_AUTH_PROVIDER, auth, database } from 'src/firebase.config';
@@ -246,7 +247,7 @@ export class FirebaseService {
   // get messages
   getConversationMessages(conversationId: string) :Observable<any>{
   const messages = new BehaviorSubject<any[]>([])
-    onSnapshot(query(collection(database, 'messages'), where('conversationId','==',conversationId)),(data)=>{
+    onSnapshot(query(collection(database, 'messages'), where('conversationId','==',conversationId), orderBy('createdAt')),(data)=>{
       const msgArr = data.docs.map(item => item.data())
       messages.next(msgArr)
     })
@@ -259,5 +260,14 @@ export class FirebaseService {
     if(!receiverId) throw new Error("Receiver Not Found")
     const user = (await getDoc(doc(database, 'users',receiverId))).data();
     return {...user, uid: receiverId}
+  }
+
+  async createMessage(conversationId:string,content:string ){
+    return await addDoc(collection(database, 'messages'),{
+      messageContent:content,
+      conversationId,
+      createdAt: Date.now(),
+      senderId: auth.currentUser?.uid ?? '',
+    })
   }
 }

@@ -19,6 +19,7 @@ export class ChatComponent implements OnInit {
   conversationsList: any[] = [];
   conversationId: string = '';
   messageInput: string = '';
+  messages:any[] = [];
 
   constructor(private helper: HelperService, private router: Router) {
   }
@@ -37,6 +38,8 @@ export class ChatComponent implements OnInit {
     this.helper.firebase.getUserConversations().subscribe({
       next: (res) => {
         this.conversationsList = res;
+        if(!this.conversationsList.length) return;
+        this.selectConversation(this.conversationsList[0].uid);
       },
       error: (err) => {
         console.log('err', err);
@@ -84,10 +87,16 @@ export class ChatComponent implements OnInit {
 
     this.helper.firebase.getConversationMessages(conversationId).subscribe((res) => {
       console.log('mes =>', res);
+      this.messages = res
     });
   }
 
   sendMessage() {
-
+    this.helper.firebase.createMessage(this.conversationId, this.messageInput).then(res => {
+      console.log("MessageCreated", res);
+      this.messageInput = '';
+    }).catch(err => {
+      console.log('MessageCreationFailed', err);
+    })
   }
 }

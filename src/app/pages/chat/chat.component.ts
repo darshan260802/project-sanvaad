@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit {
 
   constructor(private helper: HelperService, private router: Router) {}
 
+
   async ngOnInit() {
     if (document.readyState === 'complete') {
       if (!!!document.querySelector('app-root')) return;
@@ -41,7 +42,6 @@ export class ChatComponent implements OnInit {
     this.helper.firebase.getUserConversations().subscribe({
       next: (res) => {
         this.conversationsList = res;
-        if (!this.conversationsList.length) return;
         if (!this.conversationsList.length) return;
         this.selectConversation(this.conversationsList[0].uid);
       },
@@ -94,12 +94,10 @@ trackMessages(index: any, message: any) {
     }
 
     // get conversation data
-    await this.helper.firebase
-      .getConversationDetails(conversationId)
-      .then((res) => {
-        console.log('Receiver', res);
-        this.selectedUser = res;
-      });
+    await this.helper.firebase.getConversationDetails(conversationId).then((res) => {
+      console.log("Receiver", res)
+      this.selectedUser = res;
+    })
 
     this.currentMessageSub = this.helper.firebase
       .getConversationMessages(conversationId)
@@ -112,7 +110,7 @@ trackMessages(index: any, message: any) {
             this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight
           }
         },500)
-        
+
       });
   }
 

@@ -5,35 +5,32 @@
     <main class="flex-grow flex flex-row min-h-0">
       <section
         class="flex flex-col flex-none overflow-auto w-24 hover:w-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
-        <div class="header p-4 flex flex-row justify-between items-center flex-none">
+        <div class="header p-2 flex flex-row justify-between items-center flex-none border-bottom">
           <div class="relative flex flex-shrink-0 items-center gap-2.5">
             <div class="w-16 h-16">
-              <img class="rounded-lg w-full h-full object-cover bg-amber-200" [alt]="user.displayName"
-                   [src]="user.photoURL"
-
-              />
+              <img class="rounded-lg w-full h-full object-cover bg-amber-200" [title]="user?.displayName" [src]="user?.photoURL"/>
             </div>
             <div>
-              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">{{user.displayName}}</p>
-              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48">{{user.email}}</p>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default">{{user?.displayName}}</p>
+              <p class="text-ellipsis overflow-hidden whitespace-nowrap w-48 cursor-default" [title]="user?.email">{{user?.email}}</p>
             </div>
           </div>
           <div class="flex justify-between items-center">
-<!--            <div>-->
-<!--              <button id="theme-toggle" type="button" (click)="toggleMode()"-->
-<!--                      class="bg-gray-800 flex flex-shrink-0 h-8 hover:bg-gray-700 hover:text-gray-900 mx-2 p-2 rounded-lg text-gray-500 w-8 items-center">-->
-<!--                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"-->
-<!--                     xmlns="http://www.w3.org/2000/svg">-->
-<!--                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>-->
-<!--                </svg>-->
-<!--                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"-->
-<!--                     xmlns="http://www.w3.org/2000/svg">-->
-<!--                  <path-->
-<!--                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"-->
-<!--                    fill-rule="evenodd" clip-rule="evenodd"></path>-->
-<!--                </svg>-->
-<!--              </button>-->
-<!--            </div>-->
+            <!--            <div>-->
+            <!--              <button id="theme-toggle" type="button" (click)="toggleMode()"-->
+            <!--                      class="bg-gray-800 flex flex-shrink-0 h-8 hover:bg-gray-700 hover:text-gray-900 mx-2 p-2 rounded-lg text-gray-500 w-8 items-center">-->
+            <!--                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"-->
+            <!--                     xmlns="http://www.w3.org/2000/svg">-->
+            <!--                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>-->
+            <!--                </svg>-->
+            <!--                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"-->
+            <!--                     xmlns="http://www.w3.org/2000/svg">-->
+            <!--                  <path-->
+            <!--                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"-->
+            <!--                    fill-rule="evenodd" clip-rule="evenodd"></path>-->
+            <!--                </svg>-->
+            <!--              </button>-->
+            <!--            </div>-->
             <div class="relative">
               <button type="button" (click)="showSettingsDropdown = !showSettingsDropdown"
                       class="group-hover:block flex flex-shrink-0 focus:outline-none rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
@@ -59,7 +56,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
             </div>
           </div>
         </div>
-        <div class="search-box p-4 flex-none">
+        <div class="search-box px-4 flex-none py-2">
           <form onsubmit="">
             <div class="relative">
               <label>
@@ -78,7 +75,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
         </div>
         <div class="contacts p-2 flex-1 overflow-y-scroll">
 
-          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
+          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative cursor-pointer">
             <div class="w-16 h-16 relative flex flex-shrink-0">
               <img class="shadow-md rounded-full w-full h-full object-cover"
                    src="https://randomuser.me/api/portraits/men/97.jpg"
@@ -98,7 +95,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
               </div>
             </div>
           </div>
-          <div class="flex justify-between items-center p-3 bg-gray-800 rounded-lg relative">
+          <div class="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative cursor-pointer" [ngClass]="{'bg-gray-800':selectedUser == null}">
             <div class="w-16 h-16 relative flex flex-shrink-0">
               <img class="shadow-md rounded-full w-full h-full object-cover"
                    src="https://randomuser.me/api/portraits/women/33.jpg"
@@ -117,7 +114,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </div>
 
         </div>
-        <div class="flex items-center justify-around py-1 border-top border-gray-800">
+        <div class="flex items-center justify-around py-3 border-top border-gray-800">
           <div class="bg-gray-800 flex hover:bg-gray-700 items-center py-3 px-4 h-full rounded-lg">
             + New Chat
           </div>
@@ -128,7 +125,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
         </div>
       </section>
       <section class="flex flex-col flex-auto border-l border-gray-800">
-        <div class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow">
+        <div class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow border-bottom">
           <div class="flex">
             <div class="w-12 h-12 mr-4 relative flex flex-shrink-0">
               <img class="shadow-md rounded-full w-full h-full object-cover"
@@ -141,7 +138,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
               <p>Active 1h ago</p>
             </div>
           </div>
-          <div>
+          <div class="cursor-pointer">
             <a class="block rounded-full hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
               <svg viewBox="0 0 20 20" class="w-full h-full fill-current text-blue-500">
                 <path
@@ -253,11 +250,57 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </div>
         </div>
         <div class="chat-footer flex-none">
-          <div class="flex flex-row items-center p-4">
+          <div class="flex flex-row items-center p-4 border-top">
 
-            <button type="button"
-                    class="flex flex-shrink-0 focus:outline-none mx-2 bg-gray-800 text-blue-600 hover:text-blue-700 rounded-lg p-1 w-10">
-              <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24" fill="white"><path fill="white" d="M16.617 14.496a1 1 0 0 1 1.414 1.414l-3.182 3.182a7 7 0 1 1-9.9-9.9l5.658-5.656a5 5 0 1 1 7.07 7.07l-5.656 5.658a3 3 0 0 1-4.243-4.243l4.596-4.596a1 1 0 1 1 1.415 1.414l-4.597 4.596a1 1 0 1 0 1.415 1.414l5.656-5.657a3 3 0 1 0-4.242-4.242l-5.657 5.657a5 5 0 1 0 7.071 7.07l3.182-3.181z"/></svg>            </button>
+            <div class="relative">
+              <button type="button" (click)="openDropzone =!openDropzone "
+                      class="flex flex-shrink-0 focus:outline-none mx-2 bg-gray-800 text-blue-600 hover:text-blue-700 rounded-lg p-1 w-10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24" fill="white">
+                  <path fill="white"
+                        d="M16.617 14.496a1 1 0 0 1 1.414 1.414l-3.182 3.182a7 7 0 1 1-9.9-9.9l5.658-5.656a5 5 0 1 1 7.07 7.07l-5.656 5.658a3 3 0 0 1-4.243-4.243l4.596-4.596a1 1 0 1 1 1.415 1.414l-4.597 4.596a1 1 0 1 0 1.415 1.414l5.656-5.657a3 3 0 1 0-4.242-4.242l-5.657 5.657a5 5 0 1 0 7.071 7.07l3.182-3.181z"/>
+                </svg>
+              </button>
+              <div *ngIf="openDropzone"
+                   class="fixed bg-gray-800 text-white left-1/2 top-1/2 z-40 overflow-hidden border rounded-lg border-gray-700 py-4">
+                <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" id="dropzone-backdrop"></div>
+                  <div class="fixed inset-0 z-10 overflow-y-auto">
+                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                      <div
+                        class="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div class="bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                          <div class="sm:flex sm:items-start">
+                            <div
+                              class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-gray-100 sm:mx-0 sm:h-10 sm:w-10">
+                              <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24">
+                                <path fill="white"
+                                      d="M16.617 14.496a1 1 0 0 1 1.414 1.414l-3.182 3.182a7 7 0 1 1-9.9-9.9l5.658-5.656a5 5 0 1 1 7.07 7.07l-5.656 5.658a3 3 0 0 1-4.243-4.243l4.596-4.596a1 1 0 1 1 1.415 1.414l-4.597 4.596a1 1 0 1 0 1.415 1.414l5.656-5.657a3 3 0 1 0-4.242-4.242l-5.657 5.657a5 5 0 1 0 7.071 7.07l3.182-3.181z"/>
+                              </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                              <h3 class="text-base font-semibold leading-6" id="dropzone-modal-title">Dropzone</h3>
+                              <div class="mt-2">
+                                <p class="text-sm">Click or drop to this are to attach file.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                          <button type="button"
+                                  class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto"
+                                  (click)="openDropzone = false">Submit
+                          </button>
+                          <button type="button"
+                                  class="mt-3 inline-flex w-full justify-center rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-500 hover:text-gray-800 sm:mt-0 sm:w-auto"
+                                  (click)="openDropzone = false">Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="relative flex-grow">
               <label>
                 <input
@@ -274,9 +317,11 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
             </div>
             <button type="button"
                     class="flex flex-shrink-0 focus:outline-none mx-2 bg-gray-800 text-blue-600 hover:text-blue-700 rounded-lg p-1 w-10">
-              <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24" fill="white" >
-                <path fill="white" fill-rule="evenodd" clip-rule="evenodd" d="M19.2111 2.06722L3.70001 5.94499C1.63843 6.46039 1.38108 9.28612 3.31563 10.1655L8.09467 12.3378C9.07447 12.7831 10.1351 12.944 11.1658 12.8342C11.056 13.8649 11.2168 14.9255 11.6622 15.9053L13.8345 20.6843C14.7139 22.6189 17.5396 22.3615 18.055 20.3L21.9327 4.78886C22.3437 3.14517 20.8548 1.6563 19.2111 2.06722ZM8.92228 10.517C9.85936 10.943 10.9082 10.9755 11.8474 10.6424C12.2024 10.5165 12.5417 10.3383 12.8534 10.1094C12.8968 10.0775 12.9397 10.0446 12.982 10.0108L15.2708 8.17974C15.6351 7.88831 16.1117 8.36491 15.8202 8.7292L13.9892 11.018C13.9553 11.0603 13.9225 11.1032 13.8906 11.1466C13.6617 11.4583 13.4835 11.7976 13.3576 12.1526C13.0244 13.0918 13.057 14.1406 13.4829 15.0777L15.6552 19.8567C15.751 20.0673 16.0586 20.0393 16.1147 19.8149L19.9925 4.30379C20.0372 4.12485 19.8751 3.96277 19.6962 4.00751L4.18509 7.88528C3.96065 7.94138 3.93264 8.249 4.14324 8.34473L8.92228 10.517Z"/>
-              </svg>            </button>
+              <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 24 24" fill="white">
+                <path fill="white" fill-rule="evenodd" clip-rule="evenodd"
+                      d="M19.2111 2.06722L3.70001 5.94499C1.63843 6.46039 1.38108 9.28612 3.31563 10.1655L8.09467 12.3378C9.07447 12.7831 10.1351 12.944 11.1658 12.8342C11.056 13.8649 11.2168 14.9255 11.6622 15.9053L13.8345 20.6843C14.7139 22.6189 17.5396 22.3615 18.055 20.3L21.9327 4.78886C22.3437 3.14517 20.8548 1.6563 19.2111 2.06722ZM8.92228 10.517C9.85936 10.943 10.9082 10.9755 11.8474 10.6424C12.2024 10.5165 12.5417 10.3383 12.8534 10.1094C12.8968 10.0775 12.9397 10.0446 12.982 10.0108L15.2708 8.17974C15.6351 7.88831 16.1117 8.36491 15.8202 8.7292L13.9892 11.018C13.9553 11.0603 13.9225 11.1032 13.8906 11.1466C13.6617 11.4583 13.4835 11.7976 13.3576 12.1526C13.0244 13.0918 13.057 14.1406 13.4829 15.0777L15.6552 19.8567C15.751 20.0673 16.0586 20.0393 16.1147 19.8149L19.9925 4.30379C20.0372 4.12485 19.8751 3.96277 19.6962 4.00751L4.18509 7.88528C3.96065 7.94138 3.93264 8.249 4.14324 8.34473L8.92228 10.517Z"/>
+              </svg>
+            </button>
           </div>
         </div>
       </section>

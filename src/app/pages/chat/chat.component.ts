@@ -11,6 +11,9 @@ import { HelperService } from 'src/app/core/services/helper.service';
 export class ChatComponent implements OnInit {
   showSettingsDropdown: boolean = false;
   user:any = null;
+  openDropzone: boolean = false;
+  selectedUser: any = null;
+
   constructor(private helper: HelperService, private router: Router) {}
 
   async ngOnInit() {
@@ -24,14 +27,14 @@ export class ChatComponent implements OnInit {
   }
 
   toggleMode() {
-    let themeToggleDarkIcon: any = document.getElementById(
-      'theme-toggle-dark-icon'
-    );
-    let themeToggleLightIcon: any = document.getElementById(
-      'theme-toggle-light-icon'
-    );
-
-    document.documentElement.classList.toggle('dark');
+    // let themeToggleDarkIcon: any = document.getElementById(
+    //   'theme-toggle-dark-icon'
+    // );
+    // let themeToggleLightIcon: any = document.getElementById(
+    //   'theme-toggle-light-icon'
+    // );
+    //
+    // document.documentElement.classList.toggle('dark');
 
     //
     // let themeToggleBtn: any = document.getElementById('theme-toggle');

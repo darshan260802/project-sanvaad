@@ -248,7 +248,7 @@ export class FirebaseService {
   // get Selected User updates
   getUserUpdates(userId:string):Observable<any>{
     const updates = new BehaviorSubject<any>({})
-    onSnapshot(doc(database, 'users', userId), (doc) => {
+    onSnapshot(doc(database, 'users', userId), (doc) => {      
       updates.next({...doc.data(), uid:doc.id})
     })
     return updates

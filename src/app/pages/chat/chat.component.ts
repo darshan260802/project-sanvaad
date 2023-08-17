@@ -1,7 +1,7 @@
-import {Component,ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {HelperService} from 'src/app/core/services/helper.service';
-import {formatDate} from "@angular/common";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { HelperService } from 'src/app/core/services/helper.service';
+import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,16 +17,15 @@ export class ChatComponent implements OnInit {
   searchQuery = '';
   searchResult: any[] = [];
   searchTimer: any = null;
-  scrollTimer:any = null;
+  scrollTimer: any = null;
   conversationsList: any[] = [];
   conversationId: string = '';
   messageInput: string = '';
-  currentMessageSub!:Subscription;
+  currentMessageSub!: Subscription;
   messages: any[] = [];
   @ViewChild('chatBody') chatBody!: ElementRef<HTMLDivElement>;
 
   constructor(private helper: HelperService, private router: Router) {}
-
 
   async ngOnInit() {
     if (document.readyState === 'complete') {
@@ -51,9 +50,9 @@ export class ChatComponent implements OnInit {
     });
   }
 
-trackMessages(index: any, message: any) {
-  return message.uid
-}
+  trackMessages(index: any, message: any) {
+    return message.uid;
+  }
 
   handleLogout() {
     this.helper.firebase.updateUserStatus('inactive');
@@ -69,7 +68,6 @@ trackMessages(index: any, message: any) {
       this.helper.firebase
         .getSearchedUsers(this.searchQuery)
         .then((res) => {
-          console.log('SEARCH DATA', res);
           this.searchResult = res;
         })
         .catch((err) => {
@@ -80,7 +78,6 @@ trackMessages(index: any, message: any) {
 
   createConversation(receiverId: string) {
     this.helper.firebase.createConversation(receiverId).then((res) => {
-      console.log('CONVERSATION', res, receiverId);
       this.conversationId = res;
       this.searchQuery = '';
     });
@@ -89,37 +86,45 @@ trackMessages(index: any, message: any) {
   async selectConversation(conversationId: string) {
     this.conversationId = conversationId;
 
-    if(this.currentMessageSub){
+    if (this.currentMessageSub) {
       this.currentMessageSub.unsubscribe();
     }
 
     // get conversation data
-    await this.helper.firebase.getConversationDetails(conversationId).then((res) => {
-      console.log("Receiver", res)
-      this.selectedUser = res;
-    })
+    await this.helper.firebase
+      .getConversationDetails(conversationId)
+      .then((res) => {
+        this.selectedUser = res;
+      });
+
+      this.helper.firebase.getUserUpdates(this.selectedUser.uid).subscribe({
+        next: (res) => {
+          this.selectedUser = res;
+        },
+        error: (err) => {
+          console.log('err', err);
+        },        
+      })
 
     this.currentMessageSub = this.helper.firebase
       .getConversationMessages(conversationId)
       .subscribe((res) => {
-        console.log('mes =>', res);
         this.messages = res;
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(() => {
-          if(this.chatBody){
-            this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight
+          if (this.chatBody) {
+            this.chatBody.nativeElement.scrollTop =
+              this.chatBody.nativeElement.scrollHeight;
           }
-        },500)
-
+        }, 500);
       });
   }
 
   sendMessage() {
-    if(!this.messageInput.length) return
+    if (!this.messageInput.length) return;
     this.helper.firebase
       .createMessage(this.conversationId, this.messageInput)
       .then((res) => {
-        console.log('MessageCreated', res);
         this.messageInput = '';
       })
       .catch((err) => {
@@ -127,14 +132,20 @@ trackMessages(index: any, message: any) {
       });
   }
 
-  getActiveTimeStatus(lastTime: any) {
-   if (this.selectedUser.status == 'active'){
-     return "Active Now"
-   }else{
-     return ("Last Active at " +  formatDate(new Date(lastTime), 'MMM d, y, hh:mm a', 'en_US'))
-   }
-
+  get activeTimeStatus() {
+    if (!('uid' in this.selectedUser) ) return '';
+    if (this.selectedUser.status == 'active') {
+      return 'Active Now';
+    } else {
+      
+      return (
+        'Last Active at ' +
+        formatDate(
+          new Date(this.selectedUser.lastActive),
+          'MMM d, y, hh:mm a',
+          'en_US'
+        )
+      );
+    }
   }
-
-
 }

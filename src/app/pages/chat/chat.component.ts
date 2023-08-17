@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {HelperService} from 'src/app/core/services/helper.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription, from } from 'rxjs';
 import {formatDate} from "@angular/common";
+import { HelperService } from 'src/app/core/services/helper.service';
 
 @Component({
   selector: 'app-chat',
@@ -16,13 +17,16 @@ export class ChatComponent implements OnInit {
   searchQuery = '';
   searchResult: any[] = [];
   searchTimer: any = null;
+  scrollTimer:any = null;
   conversationsList: any[] = [];
   conversationId: string = '';
   messageInput: string = '';
+  currentMessageSub!:Subscription;
   messages: any[] = [];
+  @ViewChild('chatBody') chatBody!: ElementRef<HTMLDivElement>;
 
-  constructor(private helper: HelperService, private router: Router) {
-  }
+  constructor(private helper: HelperService, private router: Router) {}
+
 
   async ngOnInit() {
     if (document.readyState === 'complete') {
@@ -38,7 +42,7 @@ export class ChatComponent implements OnInit {
     this.helper.firebase.getUserConversations().subscribe({
       next: (res) => {
         this.conversationsList = res;
-        if (!this.conversationsList.length) return;
+        if(!this.conversationsList.length) return;
         this.selectConversation(this.conversationsList[0].uid);
       },
       error: (err) => {
@@ -47,7 +51,12 @@ export class ChatComponent implements OnInit {
     });
   }
 
+trackMessages(index: any, message: any) {
+  return message.uid
+}
+
   handleLogout() {
+    this.helper.firebase.updateUserStatus('inactive');
     this.helper.firebase.logout().then(() => {
       this.router.navigate(['login']);
     });
@@ -79,25 +88,43 @@ export class ChatComponent implements OnInit {
 
   async selectConversation(conversationId: string) {
     this.conversationId = conversationId;
+
+    if(this.currentMessageSub){
+      this.currentMessageSub.unsubscribe();
+    }
+
     // get conversation data
     await this.helper.firebase.getConversationDetails(conversationId).then((res) => {
       console.log("Receiver", res)
       this.selectedUser = res;
     })
 
-    this.helper.firebase.getConversationMessages(conversationId).subscribe((res) => {
-      console.log('mes =>', res);
-      this.messages = res
-    });
+    this.currentMessageSub = this.helper.firebase
+      .getConversationMessages(conversationId)
+      .subscribe((res) => {
+        console.log('mes =>', res);
+        this.messages = res;
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(() => {
+          if(this.chatBody){
+            this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight
+          }
+        },500)
+
+      });
   }
 
   sendMessage() {
-    this.helper.firebase.createMessage(this.conversationId, this.messageInput).then(res => {
-      console.log("MessageCreated", res);
-      this.messageInput = '';
-    }).catch(err => {
-      console.log('MessageCreationFailed', err);
-    })
+    if(!this.messageInput.length) return
+    this.helper.firebase
+      .createMessage(this.conversationId, this.messageInput)
+      .then((res) => {
+        console.log('MessageCreated', res);
+        this.messageInput = '';
+      })
+      .catch((err) => {
+        console.log('MessageCreationFailed', err);
+      });
   }
 
   getActiveTimeStatus(lastTime: any) {

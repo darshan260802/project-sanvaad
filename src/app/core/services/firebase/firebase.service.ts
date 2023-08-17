@@ -244,11 +244,22 @@ export class FirebaseService {
       lastActive: Date.now(),
     });
   }
+
+  // get Selected User updates
+  getUserUpdates(userId:string):Observable<any>{
+    const updates = new BehaviorSubject<any>({})
+    onSnapshot(doc(database, 'users', userId), (doc) => {
+      updates.next({...doc.data(), uid:doc.id})
+    })
+    return updates
+  }
+
+
   // get messages
   getConversationMessages(conversationId: string) :Observable<any>{
   const messages = new BehaviorSubject<any[]>([])
     onSnapshot(query(collection(database, 'messages'), where('conversationId','==',conversationId), orderBy('createdAt')),(data)=>{
-      const msgArr = data.docs.map(item => item.data())
+      const msgArr = data.docs.map(item => ({...item.data(), uid: item.id}))
       messages.next(msgArr)
     })
     return messages

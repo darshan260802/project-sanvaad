@@ -96,7 +96,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </div>
         </div>
         <!-- Conversations List -->
-        <div class="contacts p-2 flex-1 overflow-y-scroll">
+        <div class="contacts p-2 flex-1 overflow-y-scroll" >
           <!-- DISPLAY CONVERSATIONS -->
           <ng-container *ngIf="!searchQuery.length">
             <!-- Single Chat Item -->
@@ -167,14 +167,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
                     [src]="searchItem.photoURL"
                     alt=""
                   />
-                  <!-- Online Dot -->
-                  <div
-                    *ngIf="searchItem.status === 'active'"
-                    class="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0"
-                  >
-                    <div class="bg-green-500 rounded-full w-3 h-3"></div>
-                  </div>
-                  <!-- END: Online Dot -->
+                  
                 </div>
                 <!-- END: Avatar -->
                 <!-- User Info -->
@@ -216,7 +209,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
 
       <!-- Right Chat Panel  -->
       <section class="flex flex-col flex-auto border-l border-gray-800">
-        <ng-container *ngIf="selectedUser && selectedUser != user">
+        <ng-container *ngIf="selectedUser">
           <!--          selected user profile-->
           <div
             class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow border-bottom"
@@ -251,9 +244,9 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </div>
           <!--        END: selected user profile-->
           <!-- Chat Body -->
-          <div class="chat-body p-4 flex-1 overflow-y-scroll">
+          <div class="chat-body p-4 flex-1 overflow-y-scroll scroll-smooth" #chatBody >
             <!-- CHATS -->
-            <ng-container *ngFor="let message of messages">
+            <ng-container *ngFor="let message of messages; trackBy : trackMessages">
               <!-- Received Message -->
               <ng-container *ngIf="message.senderId === selectedUser.uid">
                 <div class="flex flex-row justify-start">

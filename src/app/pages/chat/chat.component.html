@@ -18,21 +18,6 @@
             </div>
           </div>
           <div class="flex justify-between items-center">
-            <!--            <div>-->
-            <!--              <button id="theme-toggle" type="button" (click)="toggleMode()"-->
-            <!--                      class="bg-gray-800 flex flex-shrink-0 h-8 hover:bg-gray-700 hover:text-gray-900 mx-2 p-2 rounded-lg text-gray-500 w-8 items-center">-->
-            <!--                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"-->
-            <!--                     xmlns="http://www.w3.org/2000/svg">-->
-            <!--                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>-->
-            <!--                </svg>-->
-            <!--                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"-->
-            <!--                     xmlns="http://www.w3.org/2000/svg">-->
-            <!--                  <path-->
-            <!--                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"-->
-            <!--                    fill-rule="evenodd" clip-rule="evenodd"></path>-->
-            <!--                </svg>-->
-            <!--              </button>-->
-            <!--            </div>-->
             <div class="relative">
               <button type="button" (click)="showSettingsDropdown = !showSettingsDropdown"
                       class="group-hover:block flex flex-shrink-0 focus:outline-none rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2">
@@ -210,7 +195,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
             </a>
           </div>
         </div>
-<!--        END: selected user profile-->
+        <!--        END: selected user profile-->
         <div class="chat-body p-4 flex-1 overflow-y-scroll">
           <div class="flex flex-row justify-start">
             <div class="messages text-sm text-gray-700 grid grid-flow-row gap-2">
@@ -364,21 +349,23 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
                 </div>
               </div>
             </div>
+            <!--            Message Input Tag-->
             <div class="relative flex-grow">
               <label>
-                <input
-                  class="rounded-full py-2 pl-3 pr-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
-                  type="text" value="" placeholder="Type here..."/>
-                <button type="button"
-                        class="absolute top-0 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6">
-                  <svg viewBox="0 0 20 20" class="w-full h-full fill-current">
-                    <path
-                      d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 3a6 6 0 0 1-11.32 0h11.32z"
-                    />
-                  </svg>
-                </button>
+                <input [ngModel]="messageInput"
+                       class="rounded-full py-2 pl-3 pr-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
+                       type="text" value="" placeholder="Type here..."/>
+                <!--                <button type="button"-->
+                <!--                        class="absolute top-0 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6">-->
+                <!--                  <svg viewBox="0 0 20 20" class="w-full h-full fill-current">-->
+                <!--                    <path-->
+                <!--                      d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 3a6 6 0 0 1-11.32 0h11.32z"-->
+                <!--                    />-->
+                <!--                  </svg>-->
+                <!--                </button>-->
               </label>
             </div>
+            <!--            END: Message Input Tag-->
             <button type="button"
                     class="flex flex-shrink-0 focus:outline-none mx-2 bg-gray-800 text-blue-600 hover:text-blue-700 rounded-lg p-1 w-10">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">

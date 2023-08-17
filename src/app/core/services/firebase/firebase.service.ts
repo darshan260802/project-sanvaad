@@ -184,12 +184,12 @@ export class FirebaseService {
         where('users', 'array-contains', auth.currentUser?.uid)
       );
       const data = (await getDocs(searchQuery)).docs
-        .map((item) => item.data())
+        .map((item) => ({...item.data(), uid: item.id}))
         .filter(
-          (item) => item['type'] === 'duo' && item['users'].includes(receiverId)
+          (item:any) => item['type'] === 'duo' && item['users'].includes(receiverId)
         );
       if (data.length) {
-        return data[0];
+        return data[0].uid;
       }
 
       const conversation_data = [auth.currentUser?.uid, receiverId];
@@ -199,7 +199,7 @@ export class FirebaseService {
         type: 'duo',
         lastMessage: '',
       });
-      return conversation;
+      return conversation.id;
     } catch (error) {
       throw error;
     }
@@ -218,16 +218,14 @@ export class FirebaseService {
           ...doc.data(),
           uid: doc.id,
         }));
-        data.forEach(async (item: any) => {
+        data.forEach((item: any) => {
           const user =
             (item['users'] as string[]).find(
               (user: string) => user !== auth.currentUser?.uid.toString()
             ) ??
             auth.currentUser?.uid ??
             '';
-
           delete item['users'];
-
           onSnapshot(doc(database, 'users', user), (doc) => {
             item['user'] = doc.data();
           })
@@ -235,8 +233,6 @@ export class FirebaseService {
         conversations.next(data);
       }
     );
-
-
     return conversations;
   }
 

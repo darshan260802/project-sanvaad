@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { from } from 'rxjs';
-import { HelperService } from 'src/app/core/services/helper.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {from} from 'rxjs';
+import {HelperService} from 'src/app/core/services/helper.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,7 +17,11 @@ export class ChatComponent implements OnInit {
   searchResult: any[] = [];
   searchTimer: any = null;
   conversationsList: any[] = [];
-  constructor(private helper: HelperService, private router: Router) {}
+  conversationId: string = '';
+  messageInput: string = '';
+
+  constructor(private helper: HelperService, private router: Router) {
+  }
 
   async ngOnInit() {
     if (document.readyState === 'complete') {
@@ -30,7 +34,6 @@ export class ChatComponent implements OnInit {
       };
     }
     this.user = await this.helper.firebase.getUserInfo();
-    this.toggleMode();
     this.helper.firebase.getUserConversations().subscribe({
       next: (res) => {
         this.conversationsList = res;
@@ -47,46 +50,6 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  toggleMode() {
-    // let themeToggleDarkIcon: any = document.getElementById(
-    //   'theme-toggle-dark-icon'
-    // );
-    // let themeToggleLightIcon: any = document.getElementById(
-    //   'theme-toggle-light-icon'
-    // );
-    //
-    // document.documentElement.classList.toggle('dark');
-    //
-    // let themeToggleBtn: any = document.getElementById('theme-toggle');
-    //
-    // themeToggleBtn?.addEventListener('click', function () {
-    //
-    //   // toggle icons inside button
-    //   themeToggleDarkIcon?.classList.toggle('hidden');
-    //   themeToggleLightIcon?.classList.toggle('hidden');
-    //
-    //   // if set via local storage previously
-    //   if (localStorage.getItem('color-theme')) {
-    //     if (localStorage.getItem('color-theme') === 'light') {
-    //       document.documentElement.classList.add('dark');
-    //       localStorage.setItem('color-theme', 'dark');
-    //     } else {
-    //       document.documentElement.classList.remove('dark');
-    //       localStorage.setItem('color-theme', 'light');
-    //     }
-    //
-    //     // if NOT set via local storage previously
-    //   } else {
-    //     if (document.documentElement.classList.contains('dark')) {
-    //       document.documentElement.classList.remove('dark');
-    //       localStorage.setItem('color-theme', 'light');
-    //     } else {
-    //       document.documentElement.classList.add('dark');
-    //       localStorage.setItem('color-theme', 'dark');
-    //     }
-    //   }
-    // })
-  }
   handleSearch() {
     clearTimeout(this.searchTimer);
 
@@ -106,18 +69,25 @@ export class ChatComponent implements OnInit {
   createConversation(receiverId: string) {
     this.helper.firebase.createConversation(receiverId).then((res) => {
       console.log('CONVERSATION', res, receiverId);
+      this.conversationId = res;
       this.searchQuery = '';
     });
   }
+
   async selectConversation(conversationId: string) {
+    this.conversationId = conversationId;
     // get conversation data
     await this.helper.firebase.getConversationDetails(conversationId).then((res) => {
-      console.log("Receiver",res)
+      console.log("Receiver", res)
       this.selectedUser = res;
     })
 
     this.helper.firebase.getConversationMessages(conversationId).subscribe((res) => {
       console.log('mes =>', res);
     });
+  }
+
+  sendMessage() {
+
   }
 }
